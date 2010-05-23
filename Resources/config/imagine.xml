@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://www.symfony-project.org/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+
+  <parameters>
+    <parameter key="imagine.command.crop.class">Imagine\Processor\Crop</parameter>
+    <parameter key="imagine.command.resize.class">Imagine\Processor\ResizeCommand</parameter>
+    <parameter key="imagine.command.delete.class">Imagine\Processor\DeleteCommand</parameter>
+    <parameter key="imagine.command.save.class">Imagine\Processor\SaveCommand</parameter>
+  </parameters>
+
+  <services>
+    <service id="imagine.manager" class="Bundle\ImagineBundle\Services\ProcessorManager" />
+  </services>
+</container>
