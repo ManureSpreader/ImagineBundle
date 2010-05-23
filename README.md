@@ -16,8 +16,8 @@ The above declaration will tell ImagineBundle to prepare image processor 'thumbn
 that will resize images to 50px width, constraining proportions, and then crop the
 bottom to 50px height, and resave the image in '/uploads/thumbs' directory.
 
-> For more information on Imagine library and available commands, check out its
-> git repository at http://github.com/avalanche123/Imagine
+> For more information on Imagine library and available commands,
+> [check out its git repository at](http://github.com/avalanche123/Imagine)
 
 To use the processor in the application, you would do something like:
 
