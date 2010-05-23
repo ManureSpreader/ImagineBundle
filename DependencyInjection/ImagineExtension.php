@@ -23,15 +23,15 @@ class ImagineExtension extends Symfony\Components\DependencyInjection\Loader\Loa
         'save'   => 'Imagine\Processor\SaveCommand',
     );
 
-    public function imagineLoad(array $config)
+    public function imagineLoad($config)
     {
         $configuration = new BuilderConfiguration();
 
         $loader = new XmlFileLoader(__DIR__.'/../Resources/config');
         $configuration->merge($loader->load($this->_resources['imagine']));
         
-        $processors = isset ($config['processors']) ? $config['processors'] : array();
-        foreach ($processors as $processorName => $commands)
+        $config = (array) $config;
+        foreach ($config as $processorName => $commands)
         {
             $processDef = new Definition('Imagine\ImageProcessor');
             foreach ($commands as $name => $args)
