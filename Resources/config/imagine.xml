@@ -6,9 +6,9 @@
 
   <parameters>
     <parameter key="imagine.command.crop.class">Imagine\Processor\Crop</parameter>
-    <parameter key="imagine.command.resize.class">Imagine\Processor\ResizeCommand</parameter>
-    <parameter key="imagine.command.delete.class">Imagine\Processor\DeleteCommand</parameter>
-    <parameter key="imagine.command.save.class">Imagine\Processor\SaveCommand</parameter>
+    <parameter key="imagine.command.resize.class">Imagine\Processor\Resize</parameter>
+    <parameter key="imagine.command.delete.class">Imagine\Processor\Delete</parameter>
+    <parameter key="imagine.command.save.class">Imagine\Processor\Save</parameter>
   </parameters>
 
   <services>
