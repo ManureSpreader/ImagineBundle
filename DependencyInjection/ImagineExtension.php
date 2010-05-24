@@ -10,7 +10,7 @@ use Symfony\Components\DependencyInjection\Loader\LoaderExtension,
     Symfony\Components\DependencyInjection\BuilderConfiguration,
     Symfony\Components\DependencyInjection\Loader\XmlFileLoader;
 
-class ImagineExtension extends Symfony\Components\DependencyInjection\Loader\LoaderExtension
+class ImagineExtension extends LoaderExtension
 {
     protected $resources = array(
         'imagine' => 'imagine.xml'
@@ -26,9 +26,8 @@ class ImagineExtension extends Symfony\Components\DependencyInjection\Loader\Loa
     public function imagineLoad($config)
     {
         $configuration = new BuilderConfiguration();
-
         $loader = new XmlFileLoader(__DIR__.'/../Resources/config');
-        $configuration->merge($loader->load($this->_resources['imagine']));
+        $configuration->merge($loader->load($this->resources['imagine']));
         
         $config = (array) $config;
         foreach ($config as $processorName => $commands)
@@ -48,6 +47,7 @@ class ImagineExtension extends Symfony\Components\DependencyInjection\Loader\Loa
             }
             $configuration->setDefinition('imagine.processor.' . $processorName, $processDef);
         }
+		return $configuration;
     }
 
     /**
