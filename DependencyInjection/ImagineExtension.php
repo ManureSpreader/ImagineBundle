@@ -34,7 +34,7 @@ class ImagineExtension extends LoaderExtension
         {
             $commands = isset ($config['commands']) ? $config['commands'] : array();
             $processDef = new Definition('Imagine\ImageProcessor');
-            foreach ($commands as $params)
+            foreach ($commands as $i => $params)
             {
                 if ( ! isset ($params['name'])) {
                     throw new \LogicException('Command doesn\'t have a name, check you app configuration');
@@ -45,7 +45,7 @@ class ImagineExtension extends LoaderExtension
                 $commandDef = new Definition(
                     new Parameter('imagine.command.' . $name . '.class')
                 , $args);
-                $serviceId = 'imagine.processor.' . $processorName . '.command.' . $name;
+                $serviceId = 'imagine.processor.' . $processorName . '.' . $i . '.command.' . $name;
                 $configuration->setDefinition($serviceId, $commandDef);
                 $processDef->addMethodCall('addCommand', array(
                     new Reference($serviceId, Container::EXCEPTION_ON_INVALID_REFERENCE)
