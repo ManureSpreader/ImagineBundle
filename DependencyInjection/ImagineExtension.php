@@ -30,11 +30,17 @@ class ImagineExtension extends LoaderExtension
         $configuration->merge($loader->load($this->resources['imagine']));
         
         $config = (array) $config;
-        foreach ($config as $processorName => $commands)
+        foreach ($config as $processorName => $config)
         {
+            $commands = isset ($config['commands']) ? $config['commands'] : array();
             $processDef = new Definition('Imagine\ImageProcessor');
-            foreach ($commands as $name => $args)
+            foreach ($commands as $params)
             {
+                if ( ! isset ($params['name'])) {
+                    throw new \LogicException('Command doesn\'t have a name, check you app configuration');
+                }
+                $name = $params['name'];
+                $args = isset ($params['arguments']) ? (array) $params['arguments'] : array();
                 $args = (isset ($args)) ? (array) $args : array();
                 $commandDef = new Definition(
                     new Parameter('imagine.command.' . $name . '.class')
@@ -47,7 +53,7 @@ class ImagineExtension extends LoaderExtension
             }
             $configuration->setDefinition('imagine.processor.' . $processorName, $processDef);
         }
-		return $configuration;
+        return $configuration;
     }
 
     /**

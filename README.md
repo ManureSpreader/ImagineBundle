@@ -7,10 +7,12 @@ Bundle that will provide image manipulation functionality to your Symfony 2 base
 Define your processors in the yaml configuration for your application like so:
 
     imagine.imagine:
-        thumbnail:
-            resize:	[50, true]
-            crop:	[0, 0, 50, 50]
-            save:	'/uploads/thumbs/'
+      thumbnail:
+        commands:
+          - { name: save, arguments: '/web/uploads/%user_id%/images/' }
+          - { name: resize, arguments: [50, true] }
+          - { name: crop, arguments: [0, 0, 50, 50] }
+          - { name: save, arguments: '/web/uploads/%user_id%/thumbnails/' }
 
 The above declaration will tell ImagineBundle to prepare image processor 'thumbnail',
 that will resize images to 50px width, constraining proportions, and then crop the
