@@ -12,6 +12,8 @@
   </parameters>
 
   <services>
-    <service id="imagine.manager" class="Bundle\ImagineBundle\Services\ProcessorManager" />
+    <service id="imagine.manager" class="Bundle\ImagineBundle\Services\ProcessorManager">
+		<argument type="service" id="service_container" />
+	</service>
   </services>
 </container>
