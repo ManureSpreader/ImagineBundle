@@ -5,10 +5,10 @@
     xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
 
   <parameters>
-    <parameter key="imagine.command.crop.class">Imagine\Processor\Crop</parameter>
-    <parameter key="imagine.command.resize.class">Imagine\Processor\Resize</parameter>
-    <parameter key="imagine.command.delete.class">Imagine\Processor\Delete</parameter>
-    <parameter key="imagine.command.save.class">Imagine\Processor\Save</parameter>
+    <parameter key="imagine.command.crop.class">Imagine\GD\Command\Crop</parameter>
+    <parameter key="imagine.command.resize.class">Imagine\GD\Command\Resize</parameter>
+    <parameter key="imagine.command.delete.class">Imagine\GD\Command\Delete</parameter>
+    <parameter key="imagine.command.save.class">Imagine\GD\Command\Save</parameter>
   </parameters>
 
   <services>
