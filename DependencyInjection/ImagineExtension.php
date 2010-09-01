@@ -2,58 +2,39 @@
 
 namespace Bundle\ImagineBundle\DependencyInjection;
 
-use Symfony\Components\DependencyInjection\Loader\LoaderExtension,
-    Symfony\Components\DependencyInjection\Definition,
-    Symfony\Components\DependencyInjection\Reference,
-    Symfony\Components\DependencyInjection\Container,
-    Symfony\Components\DependencyInjection\Parameter,
-    Symfony\Components\DependencyInjection\BuilderConfiguration,
-    Symfony\Components\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Extension\Extension,
+    Symfony\Component\DependencyInjection\ContainerBuilder,
+    Symfony\Component\DependencyInjection\Definition,
+    Symfony\Component\DependencyInjection\Reference,
+    Symfony\Component\DependencyInjection\Container,
+    Symfony\Component\DependencyInjection\Parameter,
+    Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-class ImagineExtension extends LoaderExtension
+class ImagineExtension extends Extension
 {
     protected $resources = array(
         'imagine' => 'imagine.xml'
     );
 
-    protected $commands = array(
-        'crop'   => 'Imagine\Processor\Crop',
-        'resize' => 'Imagine\Processor\ResizeCommand',
-        'delete' => 'Imagine\Processor\DeleteCommand',
-        'save'   => 'Imagine\Processor\SaveCommand',
-    );
-
-    public function imagineLoad($config)
+    public function imagineLoad($config, ContainerBuilder $container)
     {
-        $configuration = new BuilderConfiguration();
-        $loader = new XmlFileLoader(__DIR__.'/../Resources/config');
-        $configuration->merge($loader->load($this->resources['imagine']));
+        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
+        $loader->load($this->resources['imagine']);
         
         $config = (array) $config;
         foreach ($config as $processorName => $config)
         {
             $commands = isset ($config['commands']) ? $config['commands'] : array();
-            $processDef = new Definition('Imagine\ImageProcessor');
-            foreach ($commands as $i => $params)
+            $processDef = new Definition('Imagine\Processor');
+            foreach ($commands as $command)
             {
-                if ( ! isset ($params['name'])) {
-                    throw new \LogicException('Command doesn\'t have a name, check you app configuration');
+                if ( ! isset ($command['name'])) {
+                    throw new \LogicException('Command doesn\'t have a name, check your app configuration');
                 }
-                $name = $params['name'];
-                $args = isset ($params['arguments']) ? (array) $params['arguments'] : array();
-                $args = (isset ($args)) ? (array) $args : array();
-                $commandDef = new Definition(
-                    new Parameter('imagine.command.' . $name . '.class')
-                , $args);
-                $serviceId = 'imagine.processor.' . $processorName . '.' . $i . '.command.' . $name;
-                $configuration->setDefinition($serviceId, $commandDef);
-                $processDef->addMethodCall('addCommand', array(
-                    new Reference($serviceId, Container::EXCEPTION_ON_INVALID_REFERENCE)
-                ));
+                $processDef->addMethodCall($command['name'], (array)$command['arguments']);
             }
-            $configuration->setDefinition('imagine.processor.' . $processorName, $processDef);
+            $container->setDefinition('imagine.processor.' . $processorName, $processDef);
         }
-        return $configuration;
     }
 
     /**
