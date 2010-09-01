@@ -23,13 +23,12 @@ bottom to 50px height, and resave the image in '/uploads/thumbs' directory.
 
 To use the processor in the application, you would do something like:
 
-    //...
-    $processor = $this->container->getService('imagine.processor.thumbnail');
+    $processor = $this->container->get('imagine.processor.thumbnail');
     //or...
     $processor = $this->container->getImagineManagerService()->getProcessor('thumbnail');
 
 And the usual:
 
-    $processor->process(new Imagine\Standard\Image('/uploads/image.jpg'));
+    $processor->process(new Imagine\Image('/uploads/image.jpg'));
 
 Happy Coding!
