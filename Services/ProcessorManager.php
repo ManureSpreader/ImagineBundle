@@ -2,7 +2,7 @@
 
 namespace Bundle\ImagineBundle\Services;
 
-use Symfony\Components\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\Container;
 
 class ProcessorManager
 {
@@ -16,6 +16,6 @@ class ProcessorManager
     public function getProcessor($name)
     {
         $serviceName = 'imagine.processor.' . $name;
-        return $this->container->getService($serviceName);
+        return $this->container->get($serviceName);
     }
 }
